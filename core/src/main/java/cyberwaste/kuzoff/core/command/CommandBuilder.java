@@ -1,38 +1,23 @@
 package cyberwaste.kuzoff.core.command;
 
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.apache.commons.lang.StringUtils;
 
 import cyberwaste.kuzoff.core.DatabaseManager;
 
 public class CommandBuilder {
     
-    private final String commandName;
-    
     private DatabaseManager databaseManager;
-    private Map<String, String> parameters;
-    private Map<String, Class<?>> commands;
+    private String verb;
+    private String noun;
+    private String[] arguments;
 
-    public static CommandBuilder command(String commandName) {
-        return new CommandBuilder(commandName);
+    public static CommandBuilder command(String verb, String noun) {
+        return new CommandBuilder(verb, noun);
     }
 
-    private CommandBuilder(String commandName) {
-        this.commandName = commandName;
-        commands = new HashMap<String, Class<?>>();
-        commands.put("lstbl", CommandListTables.class);
-        commands.put("mktbl", CommandMakeTable.class);
-        commands.put("rwmtbl", CommandRemoveTable.class);
-        commands.put("addrw", CommandAddRow.class);
-        commands.put("rmvrw", CommandRemoveRow.class);
-        commands.put("drpdb", CommandDropDatabase.class);
-        commands.put("swtbl", CommandShowTable.class);
-        commands.put("untbl", CommandUnionTables.class);
-        commands.put("dftbl", CommandDifferenceTables.class);
-        commands.put("uqtbl", CommandUniqueTable.class);
+    private CommandBuilder(String verb, String noun) {
+        this.verb = verb;
+        this.noun = noun;
     }
     
     public CommandBuilder usingDatabaseManager(DatabaseManager databaseManager) {
@@ -40,58 +25,26 @@ public class CommandBuilder {
         return this;
     }
 
-    public CommandBuilder forDatabase(String databaseFolder) throws RemoteException {
-        this.databaseManager.forDatabaseFolder(databaseFolder);
+    public CommandBuilder withArguments(String[] arguments) {
+        this.arguments = new String[arguments.length];
+        System.arraycopy(arguments, 0, this.arguments, 0, this.arguments.length);
         return this;
     }
 
-    public CommandBuilder withParameters(Map<String, String> parameters) {
-        this.parameters = new HashMap<String, String>(parameters);
-        return this;
-    }
-
-    public Command build() throws Exception {
-        if (databaseManager.getDatabaseName() == null) {
-            throw new RuntimeException("Database folder is not specified");
-        }
-        
-        if(commands.containsKey(commandName)){
-            Class<?> commandClass = commands.get(commandName);
-            Command command = (Command) commandClass.newInstance();
-            command.setState(parameters, databaseManager);
-            return command;
-        }
-        else{
-            return new CommandUnknown();
-        }
-    }
-
-    public static String getStringParameter(Map<String, String> parameters, String key) {
-        return parameters.get(key);
-    }
-    
-    public static List<String> getListParameter(Map<String, String> parameters, String key) {
-        List<String> result = new ArrayList<String>();
-        
-        int index = 1;
-        String columnType;
-        while ((columnType = getStringParameter(parameters, key + "-" + index)) != null) {
-            result.add(columnType);
-            index++;
-        }
-        
-        return result;
-    }
-
-    public static Map<Integer, String> getMapParameter(Map<String,String> parameters, String key, int numColumns){
-        Map<Integer, String> result = new HashMap<Integer, String>();
-        
-        String columnData;
-        for (int index = 1;index<=numColumns;index++) {
-            columnData = getStringParameter(parameters, key + "-" + index);
-            if(columnData != null) result.put(index, columnData);
-        }
-        
-        return result;
+    public Command build() {
+        try {
+            String commandClassName = "cyberwaste.kuzoff.core.command." + StringUtils.capitalize(verb) + StringUtils.capitalize(noun);
+            Class<?> commandClass = Class.forName(commandClassName);
+            if (commandClass == null) {
+                return null;
+            }
+            Command commandInstance = (Command) commandClass.newInstance();
+            commandInstance.setDatabaseManager(databaseManager);
+            commandInstance.setArguments(arguments);
+            
+            return commandInstance;
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            return null;
+        } 
     }
 }

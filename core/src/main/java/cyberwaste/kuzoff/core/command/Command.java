@@ -1,11 +1,13 @@
 package cyberwaste.kuzoff.core.command;
 
-import java.util.Map;
-
 import cyberwaste.kuzoff.core.DatabaseManager;
-import cyberwaste.kuzoff.core.CommandManager;
+import cyberwaste.kuzoff.core.IOManager;
 
 public interface Command {
-    void execute(CommandManager commandManager) throws Exception;
-    void setState(Map<String,String> parameters, DatabaseManager databaseManager);
+    
+    void setArguments(String[] arguments);
+    
+    void setDatabaseManager(DatabaseManager databaseManager);
+    
+    void execute(IOManager ioManager);
 }
