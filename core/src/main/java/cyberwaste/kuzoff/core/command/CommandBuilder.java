@@ -1,5 +1,7 @@
 package cyberwaste.kuzoff.core.command;
 
+import java.lang.reflect.Field;
+
 import org.apache.commons.lang.StringUtils;
 
 import cyberwaste.kuzoff.core.DatabaseManager;
@@ -40,7 +42,15 @@ public class CommandBuilder {
             }
             Command commandInstance = (Command) commandClass.newInstance();
             commandInstance.setDatabaseManager(databaseManager);
-            commandInstance.setArguments(arguments);
+            for (Field field : commandClass.getDeclaredFields()) {
+                Argument annotation = field.getAnnotation(Argument.class);
+                if (annotation != null) {
+                    int index = annotation.index();
+                    field.setAccessible(true);
+                    field.set(commandInstance, arguments[index]);
+                    field.setAccessible(false);
+                }
+            }
             
             return commandInstance;
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {

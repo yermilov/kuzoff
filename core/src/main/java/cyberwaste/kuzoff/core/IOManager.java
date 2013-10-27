@@ -39,6 +39,6 @@ public abstract class IOManager {
     }
     
     private void outputError(Exception e) {
-        outputMessage("ERROR: "+ e.getMessage());
+        outputMessage(e.getClass().getName() + " error: " + e.getMessage());
     }
 }

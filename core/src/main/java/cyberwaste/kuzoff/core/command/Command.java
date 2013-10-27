@@ -3,11 +3,13 @@ package cyberwaste.kuzoff.core.command;
 import cyberwaste.kuzoff.core.DatabaseManager;
 import cyberwaste.kuzoff.core.IOManager;
 
-public interface Command {
+public abstract class Command {
     
-    void setArguments(String[] arguments);
+    protected DatabaseManager databaseManager;
     
-    void setDatabaseManager(DatabaseManager databaseManager);
+    public void setDatabaseManager(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
     
-    void execute(IOManager ioManager);
+    public abstract void execute(IOManager ioManager);
 }
