@@ -9,4 +9,6 @@ public interface DatabaseManager {
     Collection<Table> getAllTables();
 
     Table createTable(String name);
+
+    Table removeTable(String name);
 }

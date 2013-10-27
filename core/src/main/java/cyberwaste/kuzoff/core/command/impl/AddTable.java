@@ -1,6 +1,8 @@
-package cyberwaste.kuzoff.core.command;
+package cyberwaste.kuzoff.core.command.impl;
 
 import cyberwaste.kuzoff.core.IOManager;
+import cyberwaste.kuzoff.core.command.Argument;
+import cyberwaste.kuzoff.core.command.Command;
 import cyberwaste.kuzoff.core.domain.Table;
 
 public class AddTable extends Command {

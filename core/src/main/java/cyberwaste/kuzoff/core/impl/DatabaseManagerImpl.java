@@ -47,6 +47,16 @@ public class DatabaseManagerImpl implements DatabaseManager {
             throw new DatabaseManagerException("Can't create table", e);
         }
     }
+    
+    @Override
+    public Table removeTable(String name) {
+        try {
+            fileSystemManager.rmr(kuzoffHome, name);
+            return new Table(name);
+        } catch (IOException e) {
+            throw new DatabaseManagerException("Can't remove table", e);
+        }
+    }
 
     private Table tableFromDirectory(File tableDirectory) {
         return new Table(tableDirectory.getName());

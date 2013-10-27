@@ -35,7 +35,7 @@ public class CommandBuilder {
 
     public Command build() {
         try {
-            String commandClassName = "cyberwaste.kuzoff.core.command." + StringUtils.capitalize(verb) + StringUtils.capitalize(noun);
+            String commandClassName = "cyberwaste.kuzoff.core.command.impl." + StringUtils.capitalize(verb) + StringUtils.capitalize(noun);
             Class<?> commandClass = Class.forName(commandClassName);
             if (commandClass == null) {
                 return null;

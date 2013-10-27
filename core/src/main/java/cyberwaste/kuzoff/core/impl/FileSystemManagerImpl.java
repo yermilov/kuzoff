@@ -30,4 +30,9 @@ public class FileSystemManagerImpl implements FileSystemManager {
     public void mkdir(File parent, String name) throws IOException {
         FileUtils.forceMkdir(new File(parent, name));
     }
+    
+    @Override
+    public void rmr(File parent, String name) throws IOException {
+        FileUtils.forceDelete(new File(parent, name));
+    }
 }
