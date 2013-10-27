@@ -21,4 +21,6 @@ public interface FileSystemManager {
     void writeToFile(File directory, String fileName, String data) throws IOException;
 
     String readFromFile(File directory, String name) throws IOException;
+
+    void appendToFile(File directory, String name, String data) throws IOException;
 }

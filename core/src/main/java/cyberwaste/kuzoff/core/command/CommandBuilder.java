@@ -2,6 +2,7 @@ package cyberwaste.kuzoff.core.command;
 
 import java.lang.reflect.Field;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import cyberwaste.kuzoff.core.DatabaseManager;
@@ -28,8 +29,7 @@ public class CommandBuilder {
     }
 
     public CommandBuilder withArguments(String[] arguments) {
-        this.arguments = new String[arguments.length];
-        System.arraycopy(arguments, 0, this.arguments, 0, this.arguments.length);
+        this.arguments = (String[]) ArrayUtils.clone(arguments);
         return this;
     }
 
@@ -48,10 +48,7 @@ public class CommandBuilder {
                     field.setAccessible(true);
                     
                     if (annotation.eager()) {
-                        int startIndex = annotation.index();
-                        String[] argumentSuffix = new String[arguments.length - startIndex];
-                        System.arraycopy(arguments, startIndex, argumentSuffix, 0, argumentSuffix.length);
-                        
+                        String[] argumentSuffix = (String[]) ArrayUtils.subarray(arguments, annotation.index(), arguments.length); 
                         field.set(commandInstance, argumentSuffix);
                     } else {
                         int index = annotation.index();

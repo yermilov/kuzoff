@@ -2,6 +2,8 @@ package cyberwaste.kuzoff.core.domain;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.ArrayUtils;
+
 public class Table implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -16,8 +18,7 @@ public class Table implements Serializable {
     public Table(String name, Type[] types){
         this.name = name;
         
-        this.types = new Type[types.length];
-        System.arraycopy(types, 0, this.types, 0, types.length);
+        this.types = (Type[]) ArrayUtils.clone(types);
     }
 
     public String getName() {
@@ -25,8 +26,6 @@ public class Table implements Serializable {
     }
 
     public Type[] getColumnTypes() {
-        Type[] typesForReturn = new Type[types.length];
-        System.arraycopy(types, 0, typesForReturn, 0, types.length);
-        return typesForReturn;
+        return (Type[]) ArrayUtils.clone(types);
     }
 }

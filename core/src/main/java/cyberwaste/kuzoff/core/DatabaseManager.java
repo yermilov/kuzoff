@@ -2,6 +2,7 @@ package cyberwaste.kuzoff.core;
 
 import java.util.Collection;
 
+import cyberwaste.kuzoff.core.domain.Row;
 import cyberwaste.kuzoff.core.domain.Table;
 
 public interface DatabaseManager {
@@ -15,4 +16,6 @@ public interface DatabaseManager {
     void removeDatabase();
 
     Table getTable(String name);
+
+    Row insertRow(String tableName, String[] stringValues);
 }

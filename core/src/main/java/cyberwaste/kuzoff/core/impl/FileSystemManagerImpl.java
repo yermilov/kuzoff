@@ -53,4 +53,9 @@ public class FileSystemManagerImpl implements FileSystemManager {
     public String readFromFile(File directory, String name) throws IOException {
         return FileUtils.readFileToString(new File(directory, name));
     }
+    
+    @Override
+    public void appendToFile(File directory, String name, String data) throws IOException {
+        FileUtils.write(new File(directory, name), data + "\n", true);
+    }
 }

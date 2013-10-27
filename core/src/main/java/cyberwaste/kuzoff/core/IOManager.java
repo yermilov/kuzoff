@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.commons.lang.StringUtils;
 
 import cyberwaste.kuzoff.core.command.Command;
+import cyberwaste.kuzoff.core.domain.Row;
 import cyberwaste.kuzoff.core.domain.Table;
 public abstract class IOManager {
     
@@ -44,6 +45,12 @@ public abstract class IOManager {
         StringBuilder tableInfo = new StringBuilder();
         tableInfo.append(table.getName()).append(" (").append(StringUtils.join(table.getColumnTypes(), ", ")).append(")");
         outputResult(tableInfo.toString());
+    }
+
+    public void outputRowInfo(Row row) {
+        StringBuilder rowInfo = new StringBuilder();
+        rowInfo.append("{").append(StringUtils.join(row.getValues(), "; ")).append("}");
+        outputResult(rowInfo.toString());
     }
     
     private void outputError(Exception e) {

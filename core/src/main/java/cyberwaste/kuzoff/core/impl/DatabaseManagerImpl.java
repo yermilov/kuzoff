@@ -12,12 +12,15 @@ import org.apache.commons.lang.StringUtils;
 import cyberwaste.kuzoff.core.DatabaseManager;
 import cyberwaste.kuzoff.core.DatabaseManagerException;
 import cyberwaste.kuzoff.core.FileSystemManager;
+import cyberwaste.kuzoff.core.domain.Row;
 import cyberwaste.kuzoff.core.domain.Table;
 import cyberwaste.kuzoff.core.domain.Type;
+import cyberwaste.kuzoff.core.domain.Value;
 
 public class DatabaseManagerImpl implements DatabaseManager {
     
     private static final String METADATA_FILE = ".metadata";
+    private static final String DATA_FILE = "data";
     
     private FileSystemManager fileSystemManager;
     private File kuzoffHome;
@@ -27,20 +30,24 @@ public class DatabaseManagerImpl implements DatabaseManager {
         try {
             kuzoffHome = new File(fileSystemManager.getUserHome(), "kuzoff");
             fileSystemManager.mkdirs(kuzoffHome);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new DatabaseManagerException("Can't initialize kuzoff root directory", e);
         }
     }
 
     @Override
     public Collection<Table> getAllTables() {
-        Collection<File> tableDirectories = fileSystemManager.getSubdirectories(kuzoffHome);
-        
-        Collection<Table> tables = new ArrayList<>();
-        for (File tableDirectory : tableDirectories) {
-            tables.add(tableFromDirectory(tableDirectory));
+        try {
+            Collection<File> tableDirectories = fileSystemManager.getSubdirectories(kuzoffHome);
+            
+            Collection<Table> tables = new ArrayList<>();
+            for (File tableDirectory : tableDirectories) {
+                tables.add(tableFromDirectory(tableDirectory));
+            }
+            return tables;
+        } catch (Exception e) {
+            throw new DatabaseManagerException("Can't get tables", e);
         }
-        return tables;
     }
     
     @Override
@@ -56,7 +63,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
             fileSystemManager.writeToFile(tableDirectory, METADATA_FILE, metadata);
             
             return new Table(name, types);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new DatabaseManagerException("Can't create table", e);
         }
     }
@@ -66,7 +73,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
         try {
             fileSystemManager.rmr(kuzoffHome, name);
             return new Table(name);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new DatabaseManagerException("Can't remove table", e);
         }
     }
@@ -76,31 +83,57 @@ public class DatabaseManagerImpl implements DatabaseManager {
         try {
             fileSystemManager.rmr(kuzoffHome);
             fileSystemManager.mkdirs(kuzoffHome);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new DatabaseManagerException("Can't remove databases", e);
         }
     }
     
     @Override
     public Table getTable(String name) {
-        return tableFromDirectory(new File(kuzoffHome, name));
-    }
-
-    private Table tableFromDirectory(File tableDirectory) {
-        String tableName = tableDirectory.getName();
         try {
-            String metadata = fileSystemManager.readFromFile(tableDirectory, METADATA_FILE);
+            return tableFromDirectory(new File(kuzoffHome, name));
+        } catch (Exception e) {
+            throw new DatabaseManagerException("Can't get table " + name, e);
+        }
+    }
+    
+    @Override
+    public Row insertRow(String tableName, String[] stringValues) {
+        try {
+            Table table = getTable(tableName);
             
-            String[] columnTypes = StringUtils.split(metadata, '|');
-            Type[] types = new Type[columnTypes.length];
-            for (int i = 0; i < columnTypes.length; i++) {
-                types[i] = Type.getType(columnTypes[i]);
+            Type[] types = table.getColumnTypes();
+            Value[] values = new Value[stringValues.length];
+            
+            if (types.length != values.length) {
+                throw new IllegalArgumentException("Table " + tableName + " has " + types.length + " row(s), but " + values.length + " value(s) was(were) passed");
             }
             
-            return new Table(tableName, types);
+            for (int i = 0; i < stringValues.length; i++) {
+                values[i] = types[i].value(stringValues[i]);
+            }
+            
+            String rowData = StringUtils.join(values, "|");
+            
+            fileSystemManager.appendToFile(new File(kuzoffHome, tableName), DATA_FILE, rowData);
+            
+            return new Row(values);
         } catch (Exception e) {
-            throw new DatabaseManagerException("Can't find table " + tableName, e);
+            throw new DatabaseManagerException("Can't insert row into table " + tableName, e);
         }
+    }
+
+    private Table tableFromDirectory(File tableDirectory) throws IOException {
+        String tableName = tableDirectory.getName();
+        String metadata = fileSystemManager.readFromFile(tableDirectory, METADATA_FILE);
+        
+        String[] columnTypes = StringUtils.split(metadata, '|');
+        Type[] types = new Type[columnTypes.length];
+        for (int i = 0; i < columnTypes.length; i++) {
+            types[i] = Type.getType(columnTypes[i]);
+        }
+        
+        return new Table(tableName, types);
     }
     
     public void setFileSystemManager(FileSystemManager fileSystemManager) {

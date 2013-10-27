@@ -14,7 +14,9 @@ public abstract class Type {
         }
     }
     
-    public abstract String getName();
+    protected abstract String getName();
+
+    public abstract Value value(String stringValue);
     
     @Override
     public String toString() {
