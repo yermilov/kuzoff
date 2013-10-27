@@ -5,18 +5,14 @@ import cyberwaste.kuzoff.core.command.Argument;
 import cyberwaste.kuzoff.core.command.Command;
 import cyberwaste.kuzoff.core.domain.Table;
 
-public class AddTable extends Command {
+public class ShowTable extends Command {
     
     @Argument(index = 0)
     private String name;
     
-    @Argument(index = 1, eager = true)
-    private String[] columnTypes;
-    
     @Override
     public void execute(IOManager ioManager) {
-        Table table = databaseManager.createTable(name, columnTypes);
-        ioManager.output("Table created:");
-        ioManager.outputShortTableInfo(table);
+        Table table = databaseManager.getTable(name);
+        ioManager.outputTableInfo(table);
     }
 }

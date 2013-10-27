@@ -12,9 +12,13 @@ public interface FileSystemManager {
 
     void mkdirs(File path) throws IOException;
 
-    void mkdir(File parent, String name) throws IOException;
+    File mkdir(File parent, String name) throws IOException;
 
     void rmr(File parent, String name) throws IOException;
 
     void rmr(File path) throws IOException;
+
+    void writeToFile(File directory, String fileName, String data) throws IOException;
+
+    String readFromFile(File directory, String name) throws IOException;
 }

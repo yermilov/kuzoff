@@ -45,9 +45,20 @@ public class CommandBuilder {
             for (Field field : commandClass.getDeclaredFields()) {
                 Argument annotation = field.getAnnotation(Argument.class);
                 if (annotation != null) {
-                    int index = annotation.index();
                     field.setAccessible(true);
-                    field.set(commandInstance, arguments[index]);
+                    
+                    if (annotation.eager()) {
+                        int startIndex = annotation.index();
+                        String[] argumentSuffix = new String[arguments.length - startIndex];
+                        System.arraycopy(arguments, startIndex, argumentSuffix, 0, argumentSuffix.length);
+                        
+                        field.set(commandInstance, argumentSuffix);
+                    } else {
+                        int index = annotation.index();
+                        
+                        field.set(commandInstance, arguments[index]);
+                    }
+                    
                     field.setAccessible(false);
                 }
             }

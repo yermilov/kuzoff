@@ -27,8 +27,11 @@ public class FileSystemManagerImpl implements FileSystemManager {
     }
     
     @Override
-    public void mkdir(File parent, String name) throws IOException {
-        FileUtils.forceMkdir(new File(parent, name));
+    public File mkdir(File parent, String name) throws IOException {
+        File directory = new File(parent, name);
+        FileUtils.forceMkdir(directory);
+        
+        return directory;
     }
     
     @Override
@@ -39,5 +42,15 @@ public class FileSystemManagerImpl implements FileSystemManager {
     @Override
     public void rmr(File path) throws IOException {
         FileUtils.forceDelete(path);
+    }
+    
+    @Override
+    public void writeToFile(File directory, String fileName, String data) throws IOException {
+        FileUtils.writeStringToFile(new File(directory, fileName), data);
+    }
+    
+    @Override
+    public String readFromFile(File directory, String name) throws IOException {
+        return FileUtils.readFileToString(new File(directory, name));
     }
 }

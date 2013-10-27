@@ -8,9 +8,11 @@ public interface DatabaseManager {
 
     Collection<Table> getAllTables();
 
-    Table createTable(String name);
+    Table createTable(String name, String[] columnTypes);
 
     Table removeTable(String name);
 
     void removeDatabase();
+
+    Table getTable(String name);
 }
