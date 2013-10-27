@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -120,6 +121,32 @@ public class DatabaseManagerImpl implements DatabaseManager {
             return new Row(values);
         } catch (Exception e) {
             throw new DatabaseManagerException("Can't insert row into table " + tableName, e);
+        }
+    }
+    
+    @Override
+    public List<Row> getRows(String name) {
+        try {
+            File tableDirectory = new File(kuzoffHome, name);
+            Table table = tableFromDirectory(tableDirectory);
+            Type[] types = table.getColumnTypes();
+            
+            String tableData = fileSystemManager.readFromFile(tableDirectory, DATA_FILE);
+            String[] tableRows = StringUtils.split(tableData, '\n');
+            List<Row> rows = new ArrayList<>();
+            for (String tableRow : tableRows) {
+                String[] columns = StringUtils.split(tableRow, '|');
+                Value[] values = new Value[columns.length];
+                for (int i = 0; i < columns.length; i++) {
+                    values[i] = types[i].value(columns[i]);
+                }
+                
+                rows.add(new Row(values));
+            }
+            
+            return rows;
+        } catch (Exception e) {
+            throw new DatabaseManagerException("Can't get rows from table " + name, e);
         }
     }
 
