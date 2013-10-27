@@ -11,4 +11,6 @@ public interface DatabaseManager {
     Table createTable(String name);
 
     Table removeTable(String name);
+
+    void removeDatabase();
 }

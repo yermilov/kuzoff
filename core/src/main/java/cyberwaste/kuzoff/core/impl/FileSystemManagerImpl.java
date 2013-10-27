@@ -35,4 +35,9 @@ public class FileSystemManagerImpl implements FileSystemManager {
     public void rmr(File parent, String name) throws IOException {
         FileUtils.forceDelete(new File(parent, name));
     }
+    
+    @Override
+    public void rmr(File path) throws IOException {
+        FileUtils.forceDelete(path);
+    }
 }

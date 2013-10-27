@@ -57,6 +57,16 @@ public class DatabaseManagerImpl implements DatabaseManager {
             throw new DatabaseManagerException("Can't remove table", e);
         }
     }
+    
+    @Override
+    public void removeDatabase() {
+        try {
+            fileSystemManager.rmr(kuzoffHome);
+            fileSystemManager.mkdirs(kuzoffHome);
+        } catch (IOException e) {
+            throw new DatabaseManagerException("Can't remove databases", e);
+        }
+    }
 
     private Table tableFromDirectory(File tableDirectory) {
         return new Table(tableDirectory.getName());

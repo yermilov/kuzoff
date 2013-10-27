@@ -15,4 +15,6 @@ public interface FileSystemManager {
     void mkdir(File parent, String name) throws IOException;
 
     void rmr(File parent, String name) throws IOException;
+
+    void rmr(File path) throws IOException;
 }
