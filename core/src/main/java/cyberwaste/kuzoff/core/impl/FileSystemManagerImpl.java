@@ -58,4 +58,20 @@ public class FileSystemManagerImpl implements FileSystemManager {
     public void appendToFile(File directory, String name, String data) throws IOException {
         FileUtils.write(new File(directory, name), data + "\n", true);
     }
+    
+    @Override
+    public void mv(File directory, String from, String to) throws IOException {
+        FileUtils.copyFile(new File(directory, from), new File(directory, to));
+        FileUtils.deleteQuietly(new File(directory, from));
+    }
+    
+    @Override
+    public void rm(File directory, String name) {
+        FileUtils.deleteQuietly(new File(directory, name));
+    }
+    
+    @Override
+    public void touch(File directory, String name) throws IOException {
+        FileUtils.touch(new File(directory, name));
+    }
 }

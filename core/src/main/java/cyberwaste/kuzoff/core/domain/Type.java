@@ -22,4 +22,16 @@ public abstract class Type {
     public String toString() {
         return getName();
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        
+        if (!(obj instanceof Type)) return false;
+        
+        Type other = (Type) obj;
+        
+        return this.getName().equals(other.getName());
+    }
 }

@@ -23,4 +23,10 @@ public interface FileSystemManager {
     String readFromFile(File directory, String name) throws IOException;
 
     void appendToFile(File directory, String name, String data) throws IOException;
+
+    void mv(File directory, String from, String to) throws IOException;
+
+    void rm(File directory, String name);
+
+    void touch(File directory, String name) throws IOException;
 }

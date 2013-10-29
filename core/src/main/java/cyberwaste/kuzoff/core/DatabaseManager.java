@@ -21,4 +21,6 @@ public interface DatabaseManager {
     Row insertRow(String tableName, String[] stringValues);
 
     List<Row> getRows(String name);
+
+    List<Row> removeRow(String tableName, String primaryKey);
 }

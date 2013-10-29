@@ -22,6 +22,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
     
     private static final String METADATA_FILE = ".metadata";
     private static final String DATA_FILE = "data";
+    private static final String TEMPORARY_DATA_FILE = "._data";
     
     private FileSystemManager fileSystemManager;
     private File kuzoffHome;
@@ -147,6 +148,47 @@ public class DatabaseManagerImpl implements DatabaseManager {
             return rows;
         } catch (Exception e) {
             throw new DatabaseManagerException("Can't get rows from table " + name, e);
+        }
+    }
+    
+    @Override
+    public List<Row> removeRow(String tableName, String primaryKey) {
+        try {
+            File tableDirectory = new File(kuzoffHome, tableName);
+            Table table = tableFromDirectory(tableDirectory);
+            Type[] types = table.getColumnTypes();
+            Value key = types[0].value(primaryKey);
+            
+            String tableData = fileSystemManager.readFromFile(tableDirectory, DATA_FILE);
+            String[] tableRows = StringUtils.split(tableData, '\n');
+            List<Row> rows = new ArrayList<>();
+            List<Row> deletedRows = new ArrayList<>();
+            for (String tableRow : tableRows) {
+                String[] columns = StringUtils.split(tableRow, '|');
+                Value[] values = new Value[columns.length];
+                for (int i = 0; i < columns.length; i++) {
+                    values[i] = types[i].value(columns[i]);
+                }
+                
+                if (!values[0].equals(key)) {
+                    rows.add(new Row(values));
+                } else {
+                    deletedRows.add(new Row(values));
+                }
+            }
+            
+            fileSystemManager.rm(new File(kuzoffHome, tableName), TEMPORARY_DATA_FILE);
+            fileSystemManager.touch(new File(kuzoffHome, tableName), TEMPORARY_DATA_FILE);
+            for (Row row : rows) {
+                String rowData = StringUtils.join(row.getValues(), "|");
+                fileSystemManager.appendToFile(new File(kuzoffHome, tableName), TEMPORARY_DATA_FILE, rowData);
+            }
+            
+            fileSystemManager.mv(new File(kuzoffHome, tableName), TEMPORARY_DATA_FILE, DATA_FILE);
+            
+            return deletedRows;
+        } catch (Exception e) {
+            throw new DatabaseManagerException("Can't remove rows from table " + tableName, e);
         }
     }
 

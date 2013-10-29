@@ -13,7 +13,7 @@ public class Int extends Type {
     @Override
     public Value value(String stringValue) {
         final int value = Integer.parseInt(stringValue);
-        return new Value(){
+        return new Value(this){
 
             @Override
             protected String asString() {
