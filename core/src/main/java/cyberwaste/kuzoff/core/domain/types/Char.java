@@ -6,11 +6,6 @@ import cyberwaste.kuzoff.core.domain.Value;
 public class Char extends Type {
 
     @Override
-    protected String getName() {
-        return "char";
-    }
-
-    @Override
     public Value value(String stringValue) {
         if (stringValue.length() != 1) {
             throw new IllegalArgumentException();

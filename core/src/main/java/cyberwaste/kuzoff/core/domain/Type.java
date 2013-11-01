@@ -13,10 +13,12 @@ public abstract class Type {
             throw new IllegalArgumentException("Unknown type: " + typeName);
         }
     }
-    
-    protected abstract String getName();
 
     public abstract Value value(String stringValue);
+    
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
     
     @Override
     public String toString() {

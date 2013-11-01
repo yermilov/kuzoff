@@ -6,11 +6,6 @@ import cyberwaste.kuzoff.core.domain.Value;
 public class Real extends Type {
 
     @Override
-    protected String getName() {
-        return "real";
-    }
-
-    @Override
     public Value value(String stringValue) {
         final Double value = Double.parseDouble(stringValue);
         return new Value(this) {
