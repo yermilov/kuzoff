@@ -29,4 +29,9 @@ public abstract class Value {
         
         return this.type.equals(other.type) && this.asObject().equals(other.asObject());
     }
+    
+    @Override
+    public int hashCode() {
+        return asObject().hashCode();
+    }
 }

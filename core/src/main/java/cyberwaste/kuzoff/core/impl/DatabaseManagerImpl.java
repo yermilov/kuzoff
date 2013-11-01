@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -170,6 +172,38 @@ public class DatabaseManagerImpl implements DatabaseManager {
             fileSystemManager.mv(new File(kuzoffHome, tableName), TEMPORARY_DATA_FILE, DATA_FILE);
             
             return deletedRows;
+        } catch (Exception e) {
+            throw new DatabaseManagerException("Can't remove rows from table " + tableName, e);
+        }
+    }
+    
+    @Override
+    public List<Row> removeDuplicates(String tableName) {
+        try {
+            File tableDirectory = new File(kuzoffHome, tableName);
+            Table table = tableFromDirectory(tableDirectory);
+            
+            String tableData = fileSystemManager.readFromFile(tableDirectory, DATA_FILE);
+            String[] tableRows = StringUtils.split(tableData, '\n');
+            
+            Set<Row> rows = new HashSet<>();
+            for (String tableRow : tableRows) {
+                String[] columns = StringUtils.split(tableRow, '|');
+                Value[] rowValues = fromStringsToValues(columns, table);
+                
+                rows.add(new Row(rowValues));
+            }
+            
+            fileSystemManager.rm(new File(kuzoffHome, tableName), TEMPORARY_DATA_FILE);
+            fileSystemManager.touch(new File(kuzoffHome, tableName), TEMPORARY_DATA_FILE);
+            for (Row row : rows) {
+                String rowData = StringUtils.join(row.getValues(), "|");
+                fileSystemManager.appendToFile(new File(kuzoffHome, tableName), TEMPORARY_DATA_FILE, rowData);
+            }
+            
+            fileSystemManager.mv(new File(kuzoffHome, tableName), TEMPORARY_DATA_FILE, DATA_FILE);
+            
+            return new ArrayList<>(rows);
         } catch (Exception e) {
             throw new DatabaseManagerException("Can't remove rows from table " + tableName, e);
         }

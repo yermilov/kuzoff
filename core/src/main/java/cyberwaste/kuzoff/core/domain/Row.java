@@ -1,5 +1,7 @@
 package cyberwaste.kuzoff.core.domain;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang.ArrayUtils;
 
 public class Row {
@@ -12,5 +14,22 @@ public class Row {
 
     public Value[] getValues() {
         return (Value[]) ArrayUtils.clone(values);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        
+        if (!(obj instanceof Row)) return false;
+        
+        Row other = (Row) obj;
+        
+        return Arrays.deepEquals(this.values, other.values);
+    }
+    
+    @Override
+    public int hashCode() {
+        return 31 + Arrays.deepHashCode(values);
     }
 }

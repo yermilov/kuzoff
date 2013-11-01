@@ -12,15 +12,17 @@ public interface DatabaseManager {
 
     Table createTable(String name, String[] columnTypes);
 
-    Table removeTable(String name);
+    Table removeTable(String tableName);
 
     void removeDatabase();
 
-    Table getTable(String name);
+    Table getTable(String tableName);
 
     Row insertRow(String tableName, String[] stringValues);
 
-    List<Row> getRows(String name);
+    List<Row> getRows(String tableName);
 
     List<Row> removeRow(String tableName, String[] values);
+
+    List<Row> removeDuplicates(String tableName);
 }
