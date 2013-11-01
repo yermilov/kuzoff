@@ -22,5 +22,5 @@ public interface DatabaseManager {
 
     List<Row> getRows(String name);
 
-    List<Row> removeRow(String tableName, String primaryKey);
+    List<Row> removeRow(String tableName, String[] values);
 }

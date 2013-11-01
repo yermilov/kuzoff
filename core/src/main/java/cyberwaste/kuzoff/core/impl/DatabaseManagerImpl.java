@@ -3,6 +3,7 @@ package cyberwaste.kuzoff.core.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -152,12 +153,16 @@ public class DatabaseManagerImpl implements DatabaseManager {
     }
     
     @Override
-    public List<Row> removeRow(String tableName, String primaryKey) {
+    public List<Row> removeRow(String tableName, String[] values) {
         try {
             File tableDirectory = new File(kuzoffHome, tableName);
             Table table = tableFromDirectory(tableDirectory);
             Type[] types = table.getColumnTypes();
-            Value key = types[0].value(primaryKey);
+            
+            Value[] valuesToDelete = new Value[values.length];
+            for (int i = 0; i < values.length; i++) {
+                valuesToDelete[i] = types[i].value(values[i]);
+            }
             
             String tableData = fileSystemManager.readFromFile(tableDirectory, DATA_FILE);
             String[] tableRows = StringUtils.split(tableData, '\n');
@@ -165,15 +170,15 @@ public class DatabaseManagerImpl implements DatabaseManager {
             List<Row> deletedRows = new ArrayList<>();
             for (String tableRow : tableRows) {
                 String[] columns = StringUtils.split(tableRow, '|');
-                Value[] values = new Value[columns.length];
+                Value[] rowValues = new Value[columns.length];
                 for (int i = 0; i < columns.length; i++) {
-                    values[i] = types[i].value(columns[i]);
+                    rowValues[i] = types[i].value(columns[i]);
                 }
                 
-                if (!values[0].equals(key)) {
-                    rows.add(new Row(values));
+                if (!Arrays.deepEquals(rowValues, valuesToDelete)) {
+                    rows.add(new Row(rowValues));
                 } else {
-                    deletedRows.add(new Row(values));
+                    deletedRows.add(new Row(rowValues));
                 }
             }
             
