@@ -1,11 +1,11 @@
 package cyberwaste.kuzoff.rmi.server;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class RmiServerManager {
     
     @SuppressWarnings("resource")
     public static void main(String[] args) {
-        new ClassPathXmlApplicationContext("rmiServerContext.xml");
+        new AnnotationConfigApplicationContext(Config.class);
     }
 }
