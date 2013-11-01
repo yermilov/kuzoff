@@ -56,10 +56,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
     @Override
     public Table createTable(String name, String[] columnTypes) {
         try {
-            Type[] types = new Type[columnTypes.length];
-            for (int i = 0; i < columnTypes.length; i++) {
-                types[i] = Type.getType(columnTypes[i]);
-            }
+            Type[] types = fromStringsToTypes(columnTypes);
             String metadata = StringUtils.join(types, '|');
             
             File tableDirectory = fileSystemManager.mkdir(kuzoffHome, name);
@@ -70,7 +67,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
             throw new DatabaseManagerException("Can't create table", e);
         }
     }
-    
+
     @Override
     public Table removeTable(String name) {
         try {
@@ -104,17 +101,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
     public Row insertRow(String tableName, String[] stringValues) {
         try {
             Table table = getTable(tableName);
-            
-            Type[] types = table.getColumnTypes();
-            Value[] values = new Value[stringValues.length];
-            
-            if (types.length != values.length) {
-                throw new IllegalArgumentException("Table " + tableName + " has " + types.length + " row(s), but " + values.length + " value(s) was(were) passed");
-            }
-            
-            for (int i = 0; i < stringValues.length; i++) {
-                values[i] = types[i].value(stringValues[i]);
-            }
+            Value[] values = fromStringsToValues(stringValues, table);
             
             String rowData = StringUtils.join(values, "|");
             
@@ -125,23 +112,20 @@ public class DatabaseManagerImpl implements DatabaseManager {
             throw new DatabaseManagerException("Can't insert row into table " + tableName, e);
         }
     }
-    
+
     @Override
     public List<Row> getRows(String name) {
         try {
             File tableDirectory = new File(kuzoffHome, name);
             Table table = tableFromDirectory(tableDirectory);
-            Type[] types = table.getColumnTypes();
             
             String tableData = fileSystemManager.readFromFile(tableDirectory, DATA_FILE);
             String[] tableRows = StringUtils.split(tableData, '\n');
+            
             List<Row> rows = new ArrayList<>();
             for (String tableRow : tableRows) {
                 String[] columns = StringUtils.split(tableRow, '|');
-                Value[] values = new Value[columns.length];
-                for (int i = 0; i < columns.length; i++) {
-                    values[i] = types[i].value(columns[i]);
-                }
+                Value[] values = fromStringsToValues(columns, table);
                 
                 rows.add(new Row(values));
             }
@@ -157,23 +141,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
         try {
             File tableDirectory = new File(kuzoffHome, tableName);
             Table table = tableFromDirectory(tableDirectory);
-            Type[] types = table.getColumnTypes();
             
-            Value[] valuesToDelete = new Value[values.length];
-            for (int i = 0; i < values.length; i++) {
-                valuesToDelete[i] = types[i].value(values[i]);
-            }
+            Value[] valuesToDelete = fromStringsToValues(values, table);
             
             String tableData = fileSystemManager.readFromFile(tableDirectory, DATA_FILE);
             String[] tableRows = StringUtils.split(tableData, '\n');
+            
             List<Row> rows = new ArrayList<>();
             List<Row> deletedRows = new ArrayList<>();
             for (String tableRow : tableRows) {
                 String[] columns = StringUtils.split(tableRow, '|');
-                Value[] rowValues = new Value[columns.length];
-                for (int i = 0; i < columns.length; i++) {
-                    rowValues[i] = types[i].value(columns[i]);
-                }
+                Value[] rowValues = fromStringsToValues(columns, table);
                 
                 if (!Arrays.deepEquals(rowValues, valuesToDelete)) {
                     rows.add(new Row(rowValues));
@@ -208,6 +186,28 @@ public class DatabaseManagerImpl implements DatabaseManager {
         }
         
         return new Table(tableName, types);
+    }
+    
+    private static Type[] fromStringsToTypes(String[] columnTypes) {
+        Type[] types = new Type[columnTypes.length];
+        for (int i = 0; i < columnTypes.length; i++) {
+            types[i] = Type.getType(columnTypes[i]);
+        }
+        return types;
+    }
+    
+    private static Value[] fromStringsToValues(String[] stringValues, Table table) {
+        Type[] types = table.getColumnTypes();
+        
+        if (types.length != stringValues.length) {
+            throw new IllegalArgumentException("Table " + table.getName() + " has " + types.length + " row(s), but " + stringValues.length + " value(s) was(were) passed");
+        }
+        
+        Value[] values = new Value[stringValues.length];
+        for (int i = 0; i < stringValues.length; i++) {
+            values[i] = types[i].value(stringValues[i]);
+        }
+        return values;
     }
     
     public void setFileSystemManager(FileSystemManager fileSystemManager) {
