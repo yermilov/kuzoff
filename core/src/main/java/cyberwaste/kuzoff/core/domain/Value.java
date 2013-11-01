@@ -9,6 +9,7 @@ public abstract class Value {
     }
     
     protected abstract String asString();
+    protected abstract Object asObject();
     
     @Override
     public String toString() {
@@ -24,6 +25,6 @@ public abstract class Value {
         
         Value other = (Value) obj;
         
-        return this.type.equals(other.type) && this.asString().equals(other.asString());
+        return this.type.equals(other.type) && this.asObject().equals(other.asObject());
     }
 }

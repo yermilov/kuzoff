@@ -12,12 +12,17 @@ public class Real extends Type {
 
     @Override
     public Value value(String stringValue) {
-        final double value = Double.parseDouble(stringValue);
+        final Double value = Double.parseDouble(stringValue);
         return new Value(this) {
             
             @Override
             protected String asString() {
                 return Double.toString(value);
+            }
+
+            @Override
+            protected Double asObject() {
+                return value;
             }
         };
     }

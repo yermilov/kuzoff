@@ -204,6 +204,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
         }
         
         Value[] values = new Value[stringValues.length];
+        
         for (int i = 0; i < stringValues.length; i++) {
             values[i] = types[i].value(stringValues[i]);
         }

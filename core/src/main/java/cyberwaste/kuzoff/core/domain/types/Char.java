@@ -15,12 +15,18 @@ public class Char extends Type {
         if (stringValue.length() != 1) {
             throw new IllegalArgumentException();
         }
-        final char value = stringValue.charAt(0);
+        
+        final Character value = stringValue.charAt(0);
         return new Value(this) {
             
             @Override
             protected String asString() {
                 return Character.toString(value);
+            }
+
+            @Override
+            protected Character asObject() {
+                return value;
             }
         };
     }
