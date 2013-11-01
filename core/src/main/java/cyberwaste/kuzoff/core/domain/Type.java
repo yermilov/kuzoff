@@ -1,9 +1,13 @@
 package cyberwaste.kuzoff.core.domain;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.StringUtils;
 
-public abstract class Type {
-
+public abstract class Type implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
     public static Type getType(String typeName) {
         try {
             String typeClassName = "cyberwaste.kuzoff.core.domain.types." + StringUtils.capitalize(typeName);

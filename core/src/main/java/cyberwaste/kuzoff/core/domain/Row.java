@@ -1,10 +1,13 @@
 package cyberwaste.kuzoff.core.domain;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import org.apache.commons.lang.ArrayUtils;
 
-public class Row {
+public class Row implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     private final Value[] values;
     
