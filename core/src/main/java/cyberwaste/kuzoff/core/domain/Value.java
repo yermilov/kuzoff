@@ -7,13 +7,15 @@ public abstract class Value {
     public Value(Type type) {
         this.type = type;
     }
+
+    public abstract String externalStringRepresentation();
     
-    protected abstract String asString();
+    protected abstract String internalStringRepresentation();
     protected abstract Object asObject();
     
     @Override
     public String toString() {
-        return asString();
+        return internalStringRepresentation();
     }
     
     @Override

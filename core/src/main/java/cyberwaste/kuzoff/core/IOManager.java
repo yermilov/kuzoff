@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import cyberwaste.kuzoff.core.command.Command;
 import cyberwaste.kuzoff.core.domain.Row;
 import cyberwaste.kuzoff.core.domain.Table;
+import cyberwaste.kuzoff.core.domain.Value;
 public abstract class IOManager {
     
     protected abstract Command getNextCommand() throws IOException;
@@ -49,7 +50,15 @@ public abstract class IOManager {
 
     public void outputRowInfo(Row row) {
         StringBuilder rowInfo = new StringBuilder();
-        rowInfo.append("{").append(StringUtils.join(row.getValues(), "; ")).append("}");
+        
+        for (Value value : row.getValues()) {
+            if (rowInfo.length() > 0) {
+                rowInfo.append("; ");
+            }
+            rowInfo.append(value.externalStringRepresentation());
+        }
+        rowInfo.insert(0, "{").append("}");
+        
         outputResult(rowInfo.toString());
     }
     

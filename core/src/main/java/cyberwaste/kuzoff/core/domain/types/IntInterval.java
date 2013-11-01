@@ -24,7 +24,12 @@ public class IntInterval extends Type {
         return new Value(this) {
             
             @Override
-            protected String asString() {
+            public String externalStringRepresentation() {
+                return "[" + value.toString() + "]";
+            }
+            
+            @Override
+            protected String internalStringRepresentation() {
                 return value.toString();
             }
             

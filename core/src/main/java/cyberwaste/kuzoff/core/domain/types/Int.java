@@ -14,9 +14,14 @@ public class Int extends Type {
     public Value value(String stringValue) {
         final Integer value = Integer.parseInt(stringValue);
         return new Value(this){
+            
+            @Override
+            public String externalStringRepresentation() {
+                return Integer.toString(value);
+            }
 
             @Override
-            protected String asString() {
+            protected String internalStringRepresentation() {
                 return Integer.toString(value);
             }
 

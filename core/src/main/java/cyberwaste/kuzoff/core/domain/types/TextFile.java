@@ -1,27 +1,36 @@
 package cyberwaste.kuzoff.core.domain.types;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+
 import cyberwaste.kuzoff.core.domain.Type;
 import cyberwaste.kuzoff.core.domain.Value;
 
-public class Real extends Type {
+public class TextFile extends Type {
 
     @Override
     public Value value(String stringValue) {
-        final Double value = Double.parseDouble(stringValue);
+        final File value = new File(stringValue);
         return new Value(this) {
             
             @Override
             public String externalStringRepresentation() {
-                return Double.toString(value);
+                try {
+                    return FileUtils.readFileToString(value);
+                } catch (IOException e) {
+                    throw new IllegalArgumentException(e);
+                }
             }
             
             @Override
             protected String internalStringRepresentation() {
-                return Double.toString(value);
+                return value.getAbsolutePath();
             }
-
+            
             @Override
-            protected Double asObject() {
+            protected Object asObject() {
                 return value;
             }
         };

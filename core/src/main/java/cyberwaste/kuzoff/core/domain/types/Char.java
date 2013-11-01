@@ -15,7 +15,12 @@ public class Char extends Type {
         return new Value(this) {
             
             @Override
-            protected String asString() {
+            public String externalStringRepresentation() {
+                return Character.toString(value);
+            }
+            
+            @Override
+            protected String internalStringRepresentation() {
                 return Character.toString(value);
             }
 
