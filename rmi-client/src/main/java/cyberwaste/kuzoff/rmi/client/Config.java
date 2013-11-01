@@ -31,6 +31,7 @@ class Config {
         RmiProxyFactoryBean rmiProxyFactoryBean = new RmiProxyFactoryBean();
         rmiProxyFactoryBean.setServiceUrl("rmi://localhost/DatabaseManager");
         rmiProxyFactoryBean.setServiceInterface(DatabaseManager.class);
+        rmiProxyFactoryBean.afterPropertiesSet();
         
         return (DatabaseManager) rmiProxyFactoryBean.getObject();
     }
