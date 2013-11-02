@@ -16,19 +16,19 @@ import org.omg.PortableServer.Servant;
 import org.omg.PortableServer.ServantRetentionPolicyValue;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class IIOPServerManager {
     
-    private RemoteDatabaseManagerImpl remoteDatabaseManager;
+    private RemoteDatabaseManager remoteDatabaseManager;
     
     @SuppressWarnings("resource")
     public static void main(String[] args) throws BeansException, Exception {
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("iiopServerContext.xml");
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
         applicationContext.getBean(IIOPServerManager.class).start(args);
     }
     
-    public void start(String[] args) throws Exception {
+    private void start(String[] args) throws Exception {
         Properties p = System.getProperties();
         p.put("org.omg.CORBA.ORBClass", "com.sun.corba.se.internal.POA.POAORB");
         p.put("org.omg.CORBA.ORBSingletonClass", "com.sun.corba.se.internal.corba.ORBSingleton");
@@ -50,12 +50,11 @@ public class IIOPServerManager {
             
         Context initialNamingContext = new InitialContext();
         initialNamingContext.rebind("DatabaseService", tPOA.create_reference_with_id(id, ((Servant) tie)._all_interfaces(tPOA, id)[0]));
-        System.out.println("Database Server: Ready...");
         
         orb.run();
     }
     
-    public void setRemoteDatabaseManager(RemoteDatabaseManagerImpl remoteDatabaseManager) {
+    public void setRemoteDatabaseManager(RemoteDatabaseManager remoteDatabaseManager) {
         this.remoteDatabaseManager = remoteDatabaseManager;
     }
 }

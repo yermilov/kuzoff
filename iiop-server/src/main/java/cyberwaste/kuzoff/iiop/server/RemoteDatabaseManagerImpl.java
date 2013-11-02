@@ -1,10 +1,8 @@
 package cyberwaste.kuzoff.iiop.server;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import javax.rmi.PortableRemoteObject;
 
@@ -12,7 +10,7 @@ import cyberwaste.kuzoff.core.DatabaseManager;
 import cyberwaste.kuzoff.core.domain.Row;
 import cyberwaste.kuzoff.core.domain.Table;
 
-public class RemoteDatabaseManagerImpl extends PortableRemoteObject implements DatabaseManager {
+public class RemoteDatabaseManagerImpl extends PortableRemoteObject implements RemoteDatabaseManager {
     
     private DatabaseManager delegate;
 
@@ -21,68 +19,48 @@ public class RemoteDatabaseManagerImpl extends PortableRemoteObject implements D
     }
 
     @Override
-    public void forDatabaseFolder(String databaseFolder) throws RemoteException {
-        delegate.forDatabaseFolder(databaseFolder);
+    public Collection<Table> getAllTables() {
+        return delegate.getAllTables();
     }
 
     @Override
-    public Table loadTable(String tableName) throws IOException {
-        return delegate.loadTable(tableName);
+    public Table createTable(String name, String[] columnTypes) {
+        return delegate.createTable(name, columnTypes);
     }
 
     @Override
-    public Collection<Table> listTables() throws IOException {
-        return delegate.listTables();
+    public Table removeTable(String tableName) {
+        return delegate.removeTable(tableName);
     }
 
     @Override
-    public Table createTable(String tableName, List<String> columnTypes) throws IOException {
-        return delegate.createTable(tableName, columnTypes);
+    public void removeDatabase() {
+        delegate.removeDatabase();
     }
 
     @Override
-    public void removeTable(String tableName) throws IOException {
-        delegate.removeTable(tableName);
+    public Table getTable(String tableName) {
+        return delegate.getTable(tableName);
     }
 
     @Override
-    public Row addRow(String tableName, List<String> columnData) throws Exception {
-        return delegate.addRow(tableName, columnData);
+    public Row insertRow(String tableName, String[] stringValues) {
+        return delegate.insertRow(tableName, stringValues);
     }
 
     @Override
-    public List<Row> removeRow(String tableName, Map<Integer, String> columnData) throws Exception {
-        return delegate.removeRow(tableName, columnData);
+    public List<Row> getRows(String tableName) {
+        return delegate.getRows(tableName);
     }
 
     @Override
-    public void dropDatabase() throws IOException {
-        delegate.dropDatabase();
+    public List<Row> removeRow(String tableName, String[] values) {
+        return delegate.removeRow(tableName, values);
     }
 
     @Override
-    public String getDatabaseName() throws RemoteException {
-        return delegate.getDatabaseName();
-    }
-
-    @Override
-    public List<Row> loadTableData(String tableName) throws IOException {
-        return delegate.loadTableData(tableName);
-    }
-
-    @Override
-    public Table unionTable(String tableName1, String tableName2) throws Exception {
-        return delegate.unionTable(tableName1, tableName2);
-    }
-
-    @Override
-    public Table differenceTable(String tableName1, String tableName2) throws Exception {
-        return delegate.differenceTable(tableName1, tableName2);
-    }
-
-    @Override
-    public Table uniqueTable(String tableName) throws Exception {
-        return delegate.uniqueTable(tableName);
+    public List<Row> removeDuplicates(String tableName) {
+        return removeDuplicates(tableName);
     }
     
     public void setDelegate(DatabaseManager delegate) {
