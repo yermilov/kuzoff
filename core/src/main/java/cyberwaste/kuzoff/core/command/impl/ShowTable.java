@@ -11,7 +11,7 @@ public class ShowTable extends Command {
     private String name;
     
     @Override
-    public void execute(IOManager ioManager) {
+    public void execute(IOManager ioManager) throws Exception {
         Table table = databaseManager.getTable(name);
         ioManager.outputTableInfo(table);
     }

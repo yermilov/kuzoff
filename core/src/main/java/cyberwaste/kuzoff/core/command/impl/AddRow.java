@@ -14,7 +14,7 @@ public class AddRow extends Command {
     private String[] values;
 
     @Override
-    public void execute(IOManager ioManager) {
+    public void execute(IOManager ioManager) throws Exception {
         Row row = databaseManager.insertRow(tableName, values);
         ioManager.output("Insert 1 row:");
         ioManager.outputRowInfo(row);

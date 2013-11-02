@@ -14,7 +14,7 @@ public class AddTable extends Command {
     private String[] columnTypes;
     
     @Override
-    public void execute(IOManager ioManager) {
+    public void execute(IOManager ioManager) throws Exception {
         Table table = databaseManager.createTable(name, columnTypes);
         ioManager.output("Table created:");
         ioManager.outputShortTableInfo(table);

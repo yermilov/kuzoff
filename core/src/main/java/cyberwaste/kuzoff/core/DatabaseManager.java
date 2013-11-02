@@ -8,21 +8,21 @@ import cyberwaste.kuzoff.core.domain.Table;
 
 public interface DatabaseManager {
 
-    Collection<Table> getAllTables();
+    Collection<Table> getAllTables() throws Exception;
 
-    Table createTable(String name, String[] columnTypes);
+    Table createTable(String name, String[] columnTypes) throws Exception;
 
-    Table removeTable(String tableName);
+    Table removeTable(String tableName) throws Exception;
 
-    void removeDatabase();
+    void removeDatabase() throws Exception;
 
-    Table getTable(String tableName);
+    Table getTable(String tableName) throws Exception;
 
-    Row insertRow(String tableName, String[] stringValues);
+    Row insertRow(String tableName, String[] stringValues) throws Exception;
 
-    List<Row> getRows(String tableName);
+    List<Row> getRows(String tableName) throws Exception;
 
-    List<Row> removeRow(String tableName, String[] values);
+    List<Row> removeRow(String tableName, String[] values) throws Exception;
 
-    List<Row> removeDuplicates(String tableName);
+    List<Row> removeDuplicates(String tableName) throws Exception;
 }

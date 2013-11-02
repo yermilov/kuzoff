@@ -13,7 +13,7 @@ public class SelectTable extends Command {
     private String name;
     
     @Override
-    public void execute(IOManager ioManager) {
+    public void execute(IOManager ioManager) throws Exception {
         List<Row> rows = databaseManager.getRows(name);
         
         ioManager.output("Found " + rows.size() + " row(s):");

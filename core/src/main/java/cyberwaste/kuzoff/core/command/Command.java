@@ -11,5 +11,5 @@ public abstract class Command {
         this.databaseManager = databaseManager;
     }
     
-    public abstract void execute(IOManager ioManager);
+    public abstract void execute(IOManager ioManager) throws Exception;
 }

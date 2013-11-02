@@ -16,7 +16,7 @@ public class DropRow extends Command {
     private String[] values;
 
     @Override
-    public void execute(IOManager ioManager) {
+    public void execute(IOManager ioManager) throws Exception {
         List<Row> removedRows = databaseManager.removeRow(tableName, values);
         
         ioManager.output("Droped " + removedRows.size() + " row(s):");

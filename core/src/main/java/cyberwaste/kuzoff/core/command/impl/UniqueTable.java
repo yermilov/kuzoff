@@ -13,7 +13,7 @@ public class UniqueTable extends Command {
     private String name;
     
     @Override
-    public void execute(IOManager ioManager) {
+    public void execute(IOManager ioManager) throws Exception {
         List<Row> rows = databaseManager.removeDuplicates(name);
         
         ioManager.output("Leave " + rows.size() + " row(s):");

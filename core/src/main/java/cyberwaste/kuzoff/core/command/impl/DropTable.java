@@ -11,7 +11,7 @@ public class DropTable extends Command {
     private String name;
     
     @Override
-    public void execute(IOManager ioManager) {
+    public void execute(IOManager ioManager) throws Exception {
         Table table = databaseManager.removeTable(name);
         ioManager.output("Table droped:");
         ioManager.outputShortTableInfo(table);

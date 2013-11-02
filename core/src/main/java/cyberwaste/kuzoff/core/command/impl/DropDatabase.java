@@ -6,7 +6,7 @@ import cyberwaste.kuzoff.core.command.Command;
 public class DropDatabase extends Command {
 
     @Override
-    public void execute(IOManager ioManager) {
+    public void execute(IOManager ioManager) throws Exception {
         databaseManager.removeDatabase();
         ioManager.output("Database droped");
     }

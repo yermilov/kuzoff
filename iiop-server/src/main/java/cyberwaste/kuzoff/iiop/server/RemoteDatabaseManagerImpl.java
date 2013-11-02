@@ -19,48 +19,48 @@ public class RemoteDatabaseManagerImpl extends PortableRemoteObject implements R
     }
 
     @Override
-    public Collection<Table> getAllTables() {
+    public Collection<Table> getAllTables() throws Exception {
         return delegate.getAllTables();
     }
 
     @Override
-    public Table createTable(String name, String[] columnTypes) {
+    public Table createTable(String name, String[] columnTypes) throws Exception {
         return delegate.createTable(name, columnTypes);
     }
 
     @Override
-    public Table removeTable(String tableName) {
+    public Table removeTable(String tableName) throws Exception {
         return delegate.removeTable(tableName);
     }
 
     @Override
-    public void removeDatabase() {
+    public void removeDatabase() throws Exception {
         delegate.removeDatabase();
     }
 
     @Override
-    public Table getTable(String tableName) {
+    public Table getTable(String tableName) throws Exception {
         return delegate.getTable(tableName);
     }
 
     @Override
-    public Row insertRow(String tableName, String[] stringValues) {
+    public Row insertRow(String tableName, String[] stringValues) throws Exception {
         return delegate.insertRow(tableName, stringValues);
     }
 
     @Override
-    public List<Row> getRows(String tableName) {
+    public List<Row> getRows(String tableName) throws Exception {
         return delegate.getRows(tableName);
     }
 
     @Override
-    public List<Row> removeRow(String tableName, String[] values) {
+    public List<Row> removeRow(String tableName, String[] values) throws Exception {
         return delegate.removeRow(tableName, values);
     }
 
     @Override
-    public List<Row> removeDuplicates(String tableName) {
-        return removeDuplicates(tableName);
+    public List<Row> removeDuplicates(String tableName) throws Exception {
+        return delegate.removeDuplicates(tableName);
     }
     
     public void setDelegate(DatabaseManager delegate) {
