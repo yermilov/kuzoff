@@ -28,4 +28,21 @@ public class Table implements Serializable {
     public Type[] getColumnTypes() {
         return (Type[]) ArrayUtils.clone(types);
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        
+        if (!(obj instanceof Table)) return false;
+        
+        Table other = (Table) obj;
+        
+        return this.name.equals(other.name);
+    }
+    
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

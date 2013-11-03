@@ -8,6 +8,7 @@ import cyberwaste.kuzoff.core.command.Command;
 import cyberwaste.kuzoff.core.domain.Row;
 import cyberwaste.kuzoff.core.domain.Table;
 import cyberwaste.kuzoff.core.domain.Value;
+
 public abstract class IOManager {
     
     protected abstract Command getNextCommand() throws IOException;

@@ -40,4 +40,9 @@ public abstract class Type implements Serializable {
         
         return this.getName().equals(other.getName());
     }
+    
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
 }
