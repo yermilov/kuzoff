@@ -24,7 +24,7 @@ import cyberwaste.kuzoff.core.domain.Value;
 public class DatabaseManagerImpl implements DatabaseManager {
     
     static final String METADATA_FILE = ".metadata";
-    private static final String DATA_FILE = "data";
+    static final String DATA_FILE = "data";
     private static final String TEMPORARY_DATA_FILE = "._data";
     
     private FileSystemManager fileSystemManager;
