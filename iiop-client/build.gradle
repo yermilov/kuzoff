@@ -10,6 +10,7 @@ tasks.withType(Compile) {
 dependencies {
     compile project(':core')
     compile project(':shell')
+    compile project(':iiop-server')
     
     compile 'org.springframework:spring-context:3.2.4.RELEASE'
 }
