@@ -1,0 +1,30 @@
+class Table {
+  String name
+}
+
+class Row {
+}
+
+class Type {
+  Value value(String stringValue)
+  String getName()
+}
+
+class Value {
+  Object asObject()
+  String internalStringRepresentation()
+  String externalStringRepresentation()d
+}
+
+Table "1" *-- "*" Type : specified by
+
+Row "1" o-- "*" Value : contains
+
+Value "*" *-- "1" Type : has
+
+Type <|-- Int
+Type <|-- Char
+Type <|-- Real
+Type <|-- IntInterval
+Type <|-- TextFile
+
