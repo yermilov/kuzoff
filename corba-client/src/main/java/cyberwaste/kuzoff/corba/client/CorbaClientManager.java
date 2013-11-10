@@ -1,10 +1,10 @@
-package cyberwaste.kuzoff.iiop.client;
+package cyberwaste.kuzoff.corba.client;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import cyberwaste.kuzoff.shell.ShellManager;
 
-public class IIOPClientManager extends ShellManager {
+public class CorbaClientManager extends ShellManager {
 
     @SuppressWarnings("resource")
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package cyberwaste.kuzoff.iiop.server;
+package cyberwaste.kuzoff.corba.server;
 
 import java.rmi.RemoteException;
 import java.util.Collection;

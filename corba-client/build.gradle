@@ -1,7 +1,7 @@
 version = '0.0'
 
 apply plugin: 'java'
-sourceCompatibility = 1.6
+sourceCompatibility = 1.7
 
 tasks.withType(Compile) {
     options.encoding = 'UTF-8'
@@ -10,7 +10,7 @@ tasks.withType(Compile) {
 dependencies {
     compile project(':core')
     compile project(':shell')
-    compile project(':iiop-server')
+    compile project(':corba-server')
     
     compile 'org.springframework:spring-context:3.2.4.RELEASE'
 }
@@ -21,7 +21,7 @@ repositories {
 
 apply plugin:'application'
 startScripts {
-    mainClassName = "cyberwaste.kuzoff.iiop.client.IIOPClientManager"
+    mainClassName = "cyberwaste.kuzoff.corba.client.CorbaClientManager"
     classpath.add(files { file("lib/rmic.jar") })
     
     doLast {
@@ -29,13 +29,13 @@ startScripts {
     }
 }
 
-task rmiJar(type:Exec, dependsOn: ":iiop-server:rmiJar") {
-    commandLine 'cp', '../iiop-server/build/install/iiop-server/lib/rmic.jar', "$buildDir/install/$project.name/lib"
+task rmiJar(type:Exec, dependsOn: ":corba-server:rmiJar") {
+    commandLine 'cp', '../corba-server/build/install/corba-server/lib/rmic.jar', "$buildDir/install/$project.name/lib"
 }
 rmiJar.dependsOn installApp
 
-task installRmiApp
-installRmiApp.dependsOn rmiJar
+task installCorbaApp
+installCorbaApp.dependsOn rmiJar
 
 task orbd(type:Exec) {
     commandLine 'sh', 'src/main/scripts/orbd', '&'

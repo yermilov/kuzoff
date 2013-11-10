@@ -1,4 +1,4 @@
-package cyberwaste.kuzoff.iiop.server;
+package cyberwaste.kuzoff.corba.server;
 
 import java.util.Properties;
 
@@ -18,14 +18,14 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class IIOPServerManager {
+public class CorbaServerManager {
     
     private RemoteDatabaseManager remoteDatabaseManager;
     
     @SuppressWarnings("resource")
     public static void main(String[] args) throws BeansException, Exception {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
-        applicationContext.getBean(IIOPServerManager.class).start(args);
+        applicationContext.getBean(CorbaServerManager.class).start(args);
     }
     
     private void start(String[] args) throws Exception {

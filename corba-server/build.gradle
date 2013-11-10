@@ -1,7 +1,7 @@
 version = '0.0'
 
 apply plugin: 'java'
-sourceCompatibility = 1.6
+sourceCompatibility = 1.7
 
 tasks.withType(Compile) {
     options.encoding = 'UTF-8'
@@ -28,7 +28,7 @@ task rmiDependencies(type: Sync) {
 rmiDependencies.dependsOn rmiPrepare
 
 task rmic(type:Exec) {
-    commandLine 'rmic', '-poa', '-iiop', '-d', "$buildDir/rmic/", '-classpath', "$buildDir/libs/*;$buildDir/rmi-dependencies/*", 'cyberwaste.kuzoff.iiop.server.RemoteDatabaseManagerImpl'
+    commandLine 'rmic', '-poa', '-iiop', '-d', "$buildDir/rmic/", '-classpath', "$buildDir/libs/*;$buildDir/rmi-dependencies/*", 'cyberwaste.kuzoff.corba.server.RemoteDatabaseManagerImpl'
 }
 rmic.dependsOn assemble
 rmic.dependsOn rmiDependencies
@@ -37,7 +37,7 @@ build.dependsOn rmic
 
 apply plugin:'application'
 startScripts {
-    mainClassName = 'cyberwaste.kuzoff.iiop.server.IIOPServerManager'
+    mainClassName = 'cyberwaste.kuzoff.corba.server.CorbaServerManager'
     classpath.add(files { file("lib/rmic.jar") })
     
     doLast {
@@ -54,8 +54,8 @@ task rmiJar(type: Jar) {
 rmiJar.dependsOn installApp
 rmiJar.dependsOn rmic
 
-task installRmiApp
-installRmiApp.dependsOn rmiJar
+task installCorbaApp
+installCorbaApp.dependsOn rmiJar
 
 task orbd(type:Exec) {
     commandLine 'sh', 'src/main/scripts/orbd', '&'

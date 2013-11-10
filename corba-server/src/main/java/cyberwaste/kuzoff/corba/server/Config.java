@@ -1,4 +1,4 @@
-package cyberwaste.kuzoff.iiop.server;
+package cyberwaste.kuzoff.corba.server;
 
 import java.rmi.RemoteException;
 
@@ -18,11 +18,11 @@ import cyberwaste.kuzoff.core.impl.FileSystemManagerImpl;
 class Config {
     
     @Bean
-    public IIOPServerManager iiopServerManager() throws RemoteException {
-        IIOPServerManager iiopServerManager = new IIOPServerManager();
-        iiopServerManager.setRemoteDatabaseManager(serverIIOPDatabaseManager());
+    public CorbaServerManager iiopServerManager() throws RemoteException {
+        CorbaServerManager corbaServerManager = new CorbaServerManager();
+        corbaServerManager.setRemoteDatabaseManager(serverIIOPDatabaseManager());
         
-        return iiopServerManager;
+        return corbaServerManager;
     }
     
     @Bean
