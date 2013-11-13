@@ -10,6 +10,12 @@
     
     <context:annotation-config />
     
+    <bean 
+        id="httpInvokeDatabaseManager"
+        class= "org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter"
+        p:service-ref="databaseManager"
+        p:serviceInterface="cyberwaste.kuzoff.core.DatabaseManager" />
+    
     <bean name="databaseManager" class="cyberwaste.kuzoff.core.impl.DatabaseManagerImpl">
         <property name="fileSystemManager" ref="fileSystemManager" />
     </bean>

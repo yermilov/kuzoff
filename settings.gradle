@@ -5,6 +5,9 @@ include 'shell'
 include 'rmi-client'
 include 'rmi-server'
 
+include 'http-client'
+include 'http-server'
+
 include 'corba-client'
 include 'corba-server'
 
