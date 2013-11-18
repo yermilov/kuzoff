@@ -1,4 +1,4 @@
-package cyberwaste.kuzoff.corba.client;
+package cyberwaste.kuzoff.iiop.client;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,12 +22,12 @@ import cyberwaste.kuzoff.core.DatabaseManager;
 class Config {
 
     @Bean
-    public CorbaClientManager iiopClientManager() throws NamingException {
-        CorbaClientManager corbaClientManager = new CorbaClientManager();
-        corbaClientManager.setDatabaseManager(remoteDatabaseManager());
-        corbaClientManager.setReader(new BufferedReader(new InputStreamReader(System.in)));
+    public IIOPClientManager iiopClientManager() throws NamingException {
+        IIOPClientManager iiopClientManager = new IIOPClientManager();
+        iiopClientManager.setDatabaseManager(remoteDatabaseManager());
+        iiopClientManager.setReader(new BufferedReader(new InputStreamReader(System.in)));
         
-        return corbaClientManager;
+        return iiopClientManager;
     }
 
     @Bean

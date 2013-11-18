@@ -21,7 +21,7 @@ repositories {
 
 apply plugin:'application'
 startScripts {
-    mainClassName = "cyberwaste.kuzoff.corba.client.CorbaClientManager"
+    mainClassName = "cyberwaste.kuzoff.iiop.client.IIOPClientManager"
     classpath.add(files { file("lib/rmic.jar") })
     
     doLast {
@@ -34,8 +34,8 @@ task rmiJar(type:Exec, dependsOn: ":corba-server:rmiJar") {
 }
 rmiJar.dependsOn installApp
 
-task installCorbaApp
-installCorbaApp.dependsOn rmiJar
+task installIiopApp
+installIiopApp.dependsOn rmiJar
 
 task orbd(type:Exec) {
     commandLine 'sh', 'src/main/scripts/orbd', '&'

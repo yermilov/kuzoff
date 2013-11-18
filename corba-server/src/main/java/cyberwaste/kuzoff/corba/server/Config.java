@@ -18,7 +18,7 @@ import cyberwaste.kuzoff.core.impl.FileSystemManagerImpl;
 class Config {
     
     @Bean
-    public CorbaServerManager iiopServerManager() throws RemoteException {
+    public CorbaServerManager corbaServerManager() throws RemoteException {
         CorbaServerManager corbaServerManager = new CorbaServerManager();
         corbaServerManager.setRemoteDatabaseManager(serverIIOPDatabaseManager());
         
