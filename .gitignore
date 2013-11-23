@@ -8,8 +8,8 @@ bin/
 .gradle/
 build/
 
-# Runtime #
-iiop-server/orb.db
+# Runtime
+orb.db
 
 # Build scritps #
 !webservice-server/src/build/
