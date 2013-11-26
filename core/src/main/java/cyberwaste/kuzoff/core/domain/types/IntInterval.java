@@ -23,25 +23,7 @@ public class IntInterval extends Type {
             throw new IllegalArgumentException();
         }
         
-        return new Value(this) {
-            
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public String externalStringRepresentation() {
-                return "[" + value.toString() + "]";
-            }
-            
-            @Override
-            protected String internalStringRepresentation() {
-                return value.toString();
-            }
-            
-            @Override
-            protected Object asObject() {
-                return value; 
-            }
-        };
+        return new Value(this, "[" + value.toString() + "]", stringValue, value);
     }
     
     private static class IntIntervalObject {

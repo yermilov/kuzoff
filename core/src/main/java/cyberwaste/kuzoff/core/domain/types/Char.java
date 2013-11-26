@@ -13,25 +13,6 @@ public class Char extends Type {
             throw new IllegalArgumentException();
         }
         
-        final Character value = stringValue.charAt(0);
-        return new Value(this) {
-            
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public String externalStringRepresentation() {
-                return Character.toString(value);
-            }
-            
-            @Override
-            protected String internalStringRepresentation() {
-                return Character.toString(value);
-            }
-
-            @Override
-            protected Character asObject() {
-                return value;
-            }
-        };
+        return new Value(this, stringValue, stringValue, stringValue.charAt(0));
     }
 }

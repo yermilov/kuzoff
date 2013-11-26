@@ -71,7 +71,7 @@ public class WebServiceDatabaseManagerFacade implements DatabaseManager {
     }
 
     @Override
-    @RequestMapping(value="/table/{tableName}/unique", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/table/{tableName}/unique", method=RequestMethod.POST, produces="application/json")
     public @ResponseBody List<Row> removeDuplicates(@PathVariable("tableName") String tableName) throws Exception {
         return delegate.removeDuplicates(tableName);
     }

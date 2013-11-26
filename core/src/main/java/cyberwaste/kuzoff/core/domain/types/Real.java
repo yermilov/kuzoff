@@ -9,25 +9,6 @@ public class Real extends Type {
 
     @Override
     public Value value(String stringValue) {
-        final Double value = Double.parseDouble(stringValue);
-        return new Value(this) {
-            
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public String externalStringRepresentation() {
-                return Double.toString(value);
-            }
-            
-            @Override
-            protected String internalStringRepresentation() {
-                return Double.toString(value);
-            }
-
-            @Override
-            protected Double asObject() {
-                return value;
-            }
-        };
+        return new Value(this, stringValue, stringValue, Double.parseDouble(stringValue));
     }
 }

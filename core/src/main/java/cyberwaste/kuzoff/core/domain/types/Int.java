@@ -14,25 +14,6 @@ public class Int extends Type {
     
     @Override
     public Value value(String stringValue) {
-        final Integer value = Integer.parseInt(stringValue);
-        return new Value(this) {
-            
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public String externalStringRepresentation() {
-                return Integer.toString(value);
-            }
-
-            @Override
-            protected String internalStringRepresentation() {
-                return Integer.toString(value);
-            }
-
-            @Override
-            protected Integer asObject() {
-                return value;
-            }
-        };
+        return new Value(this, stringValue, stringValue, Integer.parseInt(stringValue));
     }
 }

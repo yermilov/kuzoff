@@ -45,7 +45,7 @@ public abstract class IOManager {
 
     public void outputTableInfo(Table table) {
         StringBuilder tableInfo = new StringBuilder();
-        tableInfo.append(table.getName()).append(" (").append(StringUtils.join(table.getColumnTypes(), ", ")).append(")");
+        tableInfo.append(table.getName()).append(" (").append(StringUtils.join(table.columnTypes(), ", ")).append(")");
         outputResult(tableInfo.toString());
     }
 
@@ -56,7 +56,7 @@ public abstract class IOManager {
             if (rowInfo.length() > 0) {
                 rowInfo.append("; ");
             }
-            rowInfo.append(value.externalStringRepresentation());
+            rowInfo.append(value.getValueAsString());
         }
         rowInfo.insert(0, "{").append("}");
         

@@ -9,7 +9,9 @@ public class Row implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    private final Value[] values;
+    private Value[] values;
+    
+    public Row() { }
     
     public Row(Value[] values) {
         this.values = (Value[]) ArrayUtils.clone(values);
@@ -17,6 +19,10 @@ public class Row implements Serializable {
 
     public Value[] getValues() {
         return (Value[]) ArrayUtils.clone(values);
+    }
+    
+    public void setValues(Value[] values) {
+        this.values = values;
     }
     
     @Override

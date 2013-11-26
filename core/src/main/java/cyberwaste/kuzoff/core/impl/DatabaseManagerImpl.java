@@ -231,7 +231,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
     }
     
     private static Value[] fromStringsToValues(String[] stringValues, Table table) {
-        Type[] types = table.getColumnTypes();
+        Type[] types = table.columnTypes();
         
         if (types.length != stringValues.length) {
             throw new IllegalArgumentException("Table " + table.getName() + " has " + types.length + " row(s), but " + stringValues.length + " value(s) was(were) passed");

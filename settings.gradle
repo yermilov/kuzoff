@@ -13,3 +13,4 @@ include 'iiop-client'
 include 'corba-server'
 
 include 'webservice-server'
+include 'webservice-client'

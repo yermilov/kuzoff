@@ -14,29 +14,11 @@ public class TextFile extends Type {
 
     @Override
     public Value value(String stringValue) {
-        final File value = new File(stringValue);
-        return new Value(this) {
-            
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public String externalStringRepresentation() {
-                try {
-                    return FileUtils.readFileToString(value);
-                } catch (IOException e) {
-                    throw new IllegalArgumentException(e);
-                }
-            }
-            
-            @Override
-            protected String internalStringRepresentation() {
-                return value.getAbsolutePath();
-            }
-            
-            @Override
-            protected Object asObject() {
-                return value;
-            }
-        };
+        try {
+            File value = new File(stringValue);
+            return new Value(this, FileUtils.readFileToString(value), value.getAbsolutePath(), value);
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }

@@ -2,14 +2,14 @@ package cyberwaste.kuzoff.core.domain;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.ArrayUtils;
-
 public class Table implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    private final String name;
-    private final Type[] types;
+    private String name;
+    private String[] typeNames;
+    
+    public Table() { }
     
     public Table(String name) {
         this(name, new Type[0]);
@@ -18,15 +18,34 @@ public class Table implements Serializable {
     public Table(String name, Type[] types){
         this.name = name;
         
-        this.types = (Type[]) ArrayUtils.clone(types);
+        this.typeNames = new String[types.length];
+        for (int i = 0; i < types.length; i++) {
+            this.typeNames[i] = types[i].getName();
+        }
+    }
+
+    public Type[] columnTypes() {
+        Type[] columnTypes = new Type[typeNames.length];
+        for (int i = 0; i < typeNames.length; i++) {
+            columnTypes[i] = Type.getType(typeNames[i]);
+        }
+        return columnTypes;
     }
 
     public String getName() {
         return name;
     }
-
-    public Type[] getColumnTypes() {
-        return (Type[]) ArrayUtils.clone(types);
+    
+    public String[] getTypeNames() {
+        return typeNames;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public void setTypeNames(String[] typeNames) {
+        this.typeNames = typeNames;
     }
     
     @Override
