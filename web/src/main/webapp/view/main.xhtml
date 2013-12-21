@@ -29,7 +29,7 @@
                 <p:columns value="#{webApp.tableColumnTypes}" var="column" columnIndexVar="colIndex">
                     
                     <f:facet name="header">
-                        Column \##{colIndex + 1}: #{column}
+                        type: [#{column}]
                     </f:facet>
                     
                     <h:outputText value="#{row.values[colIndex].valueAsString}" />
@@ -47,7 +47,7 @@
                 <p:columns value="#{webApp.tableColumnTypes}" var="column" columnIndexVar="colIndex">
                     
                     <f:facet name="header">
-                        Column \##{colIndex + 1}: #{column}
+                        type: [#{column}]
                     </f:facet>
                     
                     <p:inputText value="#{newRow[colIndex]}" />
