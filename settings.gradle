@@ -14,3 +14,5 @@ include 'corba-server'
 
 include 'webservice-server'
 include 'webservice-client'
+
+include 'web'

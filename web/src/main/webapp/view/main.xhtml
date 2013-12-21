@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3c.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>
+            kuzoff
+        </title>
+    </h:head>
+    
+    <h:body>
+
+        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true" />
+
+        <h:form>
+        
+            <p:selectOneMenu id="tables" value="#{webApp.primaryTable}">
+                <f:selectItem itemLabel="Select table" itemValue="" />
+                <f:selectItems value="#{webApp.allTables}" />
+                
+                <p:ajax event="change" update="table new-row" />
+            </p:selectOneMenu>  
+
+            <p:dataTable id="table" var="row" value="#{webApp.tableData}">
+                
+                <p:columns value="#{webApp.tableColumnTypes}" var="column" columnIndexVar="colIndex">
+                    
+                    <f:facet name="header">
+                        Column \##{colIndex + 1}: #{column}
+                    </f:facet>
+                    
+                    <h:outputText value="#{row.values[colIndex].valueAsString}" />
+                        
+                </p:columns>
+                
+            </p:dataTable>
+            
+            <p:commandButton value="ADD NEW ROW" update="table new-row" actionListener="#{webApp.addRow}" ajax="true" /> 
+                
+            <br/>
+
+            <p:dataTable id="new-row" var="newRow" value="#{webApp.newRowValues}">
+                
+                <p:columns value="#{webApp.tableColumnTypes}" var="column" columnIndexVar="colIndex">
+                    
+                    <f:facet name="header">
+                        Column \##{colIndex + 1}: #{column}
+                    </f:facet>
+                    
+                    <p:inputText value="#{newRow[colIndex]}" />
+                        
+                </p:columns>
+                
+            </p:dataTable>
+            
+            <p:commandButton 
+                value="UNIQUE" actionListener="#{webApp.unique}" ajax="true" 
+                update="tables tables-for-operation table new-row" />
+            
+            <p:selectOneMenu id="tables-for-operation" value="#{webApp.secondaryTable}"> 
+                <f:selectItems value="#{webApp.allTables}" />  
+                <p:ajax event="change" update="table new-row" />  
+            </p:selectOneMenu>
+        </h:form>
+
+    </h:body>
+
+</html>
