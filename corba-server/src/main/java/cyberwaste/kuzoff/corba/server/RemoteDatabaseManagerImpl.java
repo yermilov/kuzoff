@@ -63,6 +63,11 @@ public class RemoteDatabaseManagerImpl extends PortableRemoteObject implements R
         return delegate.removeDuplicates(tableName);
     }
     
+    @Override
+    public List<Row> difference(String tableName1, String tableName2) throws Exception {
+        return delegate.difference(tableName1, tableName2);
+    }
+    
     public void setDelegate(DatabaseManager delegate) {
         this.delegate = delegate;
     }

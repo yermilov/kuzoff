@@ -25,4 +25,6 @@ public interface DatabaseManager {
     List<Row> removeRow(String tableName, String[] values) throws Exception;
 
     List<Row> removeDuplicates(String tableName) throws Exception;
+    
+    List<Row> difference(String tableName1, String tableName2) throws Exception;
 }

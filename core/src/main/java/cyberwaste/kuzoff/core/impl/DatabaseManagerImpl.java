@@ -208,6 +208,56 @@ public class DatabaseManagerImpl implements DatabaseManager {
             throw new DatabaseManagerException("Can't remove rows from table " + tableName, e);
         }
     }
+    
+    @Override
+    public List<Row> difference(String tableName1, String tableName2) throws Exception {
+        try {
+            File tableDirectory1 = new File(kuzoffHome, tableName1);
+            Table table1 = tableFromDirectory(tableDirectory1);
+            
+            String tableData1 = fileSystemManager.readFromFile(tableDirectory1, DATA_FILE);
+            String[] tableRows1 = StringUtils.split(tableData1, '\n');
+            
+            List<Row> rows1 = new ArrayList<>();
+            for (String tableRow : tableRows1) {
+                String[] columns = StringUtils.split(tableRow, '|');
+                Value[] rowValues = fromStringsToValues(columns, table1);
+                
+                rows1.add(new Row(rowValues));
+            }
+            
+            File tableDirectory2 = new File(kuzoffHome, tableName2);
+            Table table2 = tableFromDirectory(tableDirectory2);
+            
+            String tableData2 = fileSystemManager.readFromFile(tableDirectory2, DATA_FILE);
+            String[] tableRows2 = StringUtils.split(tableData2, '\n');
+            
+            List<Row> rows2 = new ArrayList<>();
+            for (String tableRow : tableRows2) {
+                String[] columns = StringUtils.split(tableRow, '|');
+                Value[] rowValues = fromStringsToValues(columns, table2);
+                
+                rows2.add(new Row(rowValues));
+            }
+            
+            fileSystemManager.rm(new File(kuzoffHome, tableName1), TEMPORARY_DATA_FILE);
+            fileSystemManager.touch(new File(kuzoffHome, tableName1), TEMPORARY_DATA_FILE);
+            List<Row> result = new ArrayList<>();
+            for (Row row : rows1) {
+                if (!rows2.contains(row)) {
+                    result.add(row);
+                    String rowData = StringUtils.join(row.getValues(), "|");
+                    fileSystemManager.appendToFile(new File(kuzoffHome, tableName1), TEMPORARY_DATA_FILE, rowData);
+                }
+            }
+            
+            fileSystemManager.mv(new File(kuzoffHome, tableName1), TEMPORARY_DATA_FILE, DATA_FILE);
+            
+            return result;
+        } catch (Exception e) {
+            throw new DatabaseManagerException("Can't find difference between " + tableName1 + " and "+ tableName2, e);
+        }
+    }
 
     private Table tableFromDirectory(File tableDirectory) throws IOException {
         String tableName = tableDirectory.getName();

@@ -83,6 +83,12 @@ public class WebServiceDatabaseManagerFacade implements DatabaseManager {
         return delegate.removeTable(tableName);
     }
     
+    @Override
+    @RequestMapping(value="/table/{tableName1}/diff/{tableName2}", method=RequestMethod.POST, produces="application/json")
+    public @ResponseBody List<Row> difference(@PathVariable("tableName1") String tableName1, @PathVariable("tableName2") String tableName2) throws Exception {
+        return delegate.difference(tableName1, tableName2);
+    }
+    
     public void setDelegate(DatabaseManager delegate) {
         this.delegate = delegate;
     }

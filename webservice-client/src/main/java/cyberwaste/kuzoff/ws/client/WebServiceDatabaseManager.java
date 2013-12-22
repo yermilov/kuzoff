@@ -95,6 +95,16 @@ public class WebServiceDatabaseManager implements DatabaseManager {
         Row[] result = restTemplate.postForObject(SERVICE_URL + "/table/{tableName}/unique", null, Row[].class, parameters);
         return Arrays.asList(result);
     }
+    
+    @Override
+    public List<Row> difference(String tableName1, String tableName2) throws Exception {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("tableName1", tableName1);
+        parameters.put("tableName2", tableName2);
+        
+        Row[] result = restTemplate.postForObject(SERVICE_URL + "/table/{tableName1}/diff/{tableName2}", null, Row[].class, parameters);
+        return Arrays.asList(result);
+    }
 
     public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
