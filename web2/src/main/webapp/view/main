@@ -35,5 +35,7 @@
             <div id="tableData" class="dtable">
             </div>
         </div>
+        
+        <input id="buttonUnique" type="submit" value="Unique" />
     </body>
 </html>

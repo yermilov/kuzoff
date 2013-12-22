@@ -9,12 +9,22 @@ $(document).ready(function() {
     $('#selectTable').on('change', function() {
         loadDataForTable($(this).val());
     });
+    
+    $("#buttonUnique").click(function(e){
+        $.post("http://localhost:8080/kuzoff-ws/api/table/" + $('#selectTable').val() + "/unique", null,
+            function(responseData) {
+                $('#tableData').empty();
+                $('#rowTmpl').tmpl(responseData).appendTo('#tableData');
+            }
+        );
+        e.preventDefault();
+    }); 
 });
 
 function loadDataForTable(tableName) {
-    $('#tableData').empty();
     $.get("http://localhost:8080/kuzoff-ws/api/table/" + tableName + "/data", null,
         function(responseData) {
+            $('#tableData').empty();
             $('#rowTmpl').tmpl(responseData).appendTo('#tableData');
         }
     );
