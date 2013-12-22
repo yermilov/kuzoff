@@ -1,5 +1,7 @@
 package cyberwaste.kuzoff.core.domain.types;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 import cyberwaste.kuzoff.core.domain.Type;
@@ -26,7 +28,10 @@ public class IntInterval extends Type {
         return new Value(this, "[" + value.toString() + "]", stringValue, value);
     }
     
-    private static class IntIntervalObject {
+    private static class IntIntervalObject implements Serializable {
+        
+        private static final long serialVersionUID = 1L;
+        
         private int lower;
         private int upper;
         

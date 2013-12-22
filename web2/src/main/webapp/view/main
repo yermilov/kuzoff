@@ -8,13 +8,32 @@
         
         <script src="js/main.js" type="text/javascript"></script>
         
+        <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+        
         <script id="tablesTmpl" type="text/x-jquery-tmpl">
             <option value="${name}">${name}</option>
+        </script>
+        
+        <script id="rowTmpl" type="text/x-jquery-tmpl">
+            <div class="drow">
+                {{tmpl($data.values) "#cellTmpl"}}
+            </div>
+        </script>
+        
+        <script id="cellTmpl" type="text/x-jquery-tmpl">
+            <div class="dcell">
+                ${valueAsString}
+            </div>
         </script>
     </head>
     
     <body>
-        <select id="selectTable"> 
+        <select id="selectTable">
         </select>
+        
+        <div>
+            <div id="tableData" class="dtable">
+            </div>
+        </div>
     </body>
 </html>
