@@ -7,7 +7,7 @@
     
     <h:head>
         <title>
-            kuzoff
+            jobs
         </title>
     </h:head>
     
@@ -74,6 +74,20 @@
                             <f:selectItems value="#{jobsWebApp.allTables}" />
                             <p:ajax event="change" update="table new-row" />
                         </p:selectOneListbox>
+                    </p:column>
+                </p:row>
+                
+                <p:row>
+                    <p:column>
+                        <a href="http://localhost:8080/kuzoff/view/ritchie.xhtml">
+                            <img src="http://media.boingboing.net/wp-content/uploads/2011/10/dennis_ritchie.jpg" width="100px"/>
+                            </a>
+                    </p:column>
+                    
+                    <p:column>
+                        <a href="http://localhost:8080/kuzoff/view/jobs.xhtml">
+                            <img src="http://tabtimes.com/ckfinder/userfiles/images/TWIT/Steve-Job-Ipad.jpg" width="300px"/>
+                        </a>
                     </p:column>
                 </p:row>
                 

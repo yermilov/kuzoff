@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3c.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>
+            ritchie
+        </title>
+    </h:head>
+    
+    <h:body>
+
+        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true" />
+        
+        <p:panel>
+        
+            <p:row>
+                <p:column colspan="2">
+                    <h:form>
+                        <p:focus for="terminal" />
+                        
+                        <p:terminal id="terminal" widgetVar="term" commandHandler="#{ritchieWebApp.handleCommand}" />
+                        
+                        <p:commandButton  
+                            type="button" value="Clear" icon="ui-icon-trash" onclick="PF('term').clear()" 
+                            style="margin-top:10px" />
+                    </h:form>
+                </p:column>
+            </p:row>
+            
+            <p:row>
+                <p:column>
+                    <a href="http://localhost:8080/kuzoff/view/ritchie.xhtml">
+                        <img src="http://media.boingboing.net/wp-content/uploads/2011/10/dennis_ritchie.jpg" width="200px"/>
+                    </a>
+                </p:column>
+                
+                <p:column>
+                    <a href="http://localhost:8080/kuzoff/view/jobs.xhtml">
+                        <img src="http://tabtimes.com/ckfinder/userfiles/images/TWIT/Steve-Job-Ipad.jpg" width="200px"/>
+                    </a>
+                </p:column>
+            </p:row>
+        </p:panel> 
+
+    </h:body>
+
+</html>

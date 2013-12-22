@@ -20,4 +20,15 @@
         </managed-property>
     </managed-bean>
     
+    <managed-bean>
+        <managed-bean-name>ritchieWebApp</managed-bean-name>
+        <managed-bean-class>cyberwaste.kuzoff.web.jsf.RitchieWebApp</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+        
+        <managed-property>
+            <property-name>databaseManager</property-name>
+            <value>#{databaseManager}</value>
+        </managed-property>
+    </managed-bean>
+    
 </faces-config>
