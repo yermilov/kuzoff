@@ -1,8 +1,7 @@
 $(document).ready(function() {
-    var data = [
-        { value: "value1", label: "label1"},
-        { value: "value2", label: "label2"}
-    ];
-    
-    $('#tablesTmpl').tmpl(data).appendTo('#selectTable');
+    $.get("http://localhost:8080/kuzoff-ws/api/table", null,
+        function(responseData) {
+            $('#tablesTmpl').tmpl(responseData).appendTo('#selectTable');
+        }
+    );
 });
