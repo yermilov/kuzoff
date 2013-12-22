@@ -15,5 +15,7 @@ include 'corba-server'
 include 'webservice-server'
 include 'webservice-client'
 
+include 'groovy-client'
+
 include 'web'
 include 'web2'

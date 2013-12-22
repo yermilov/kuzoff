@@ -1,0 +1,18 @@
+version = '0.0'
+
+apply plugin: 'groovy'
+
+tasks.withType(Compile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    compile localGroovy()
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin:'application'
+mainClassName = "cyberwaste.kuzoff.ws.groovyclient.WebServiceGroovyClient"
