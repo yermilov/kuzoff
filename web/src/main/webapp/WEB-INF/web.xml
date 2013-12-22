@@ -31,7 +31,7 @@
     
     <!-- Home page -->
     <welcome-file-list>
-        <welcome-file>/view/main.xhtml</welcome-file>
+        <welcome-file>/view/jobs.xhtml</welcome-file>
     </welcome-file-list>
 
 </web-app>

@@ -10,8 +10,8 @@
     </application>
     
     <managed-bean>
-        <managed-bean-name>webApp</managed-bean-name>
-        <managed-bean-class>cyberwaste.kuzoff.web.jsf.WebApp</managed-bean-class>
+        <managed-bean-name>jobsWebApp</managed-bean-name>
+        <managed-bean-class>cyberwaste.kuzoff.web.jsf.JobsWebApp</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
         
         <managed-property>

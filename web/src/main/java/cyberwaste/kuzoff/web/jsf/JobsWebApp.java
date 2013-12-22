@@ -11,7 +11,7 @@ import cyberwaste.kuzoff.core.DatabaseManager;
 import cyberwaste.kuzoff.core.domain.Row;
 import cyberwaste.kuzoff.core.domain.Table;
 
-public class WebApp {
+public class JobsWebApp {
 
     private DatabaseManager databaseManager;
     
