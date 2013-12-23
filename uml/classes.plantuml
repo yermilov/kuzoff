@@ -6,14 +6,14 @@ class Row {
 }
 
 class Type {
+  String name
   Value value(String stringValue)
-  String getName()
 }
 
 class Value {
-  Object asObject()
-  String internalStringRepresentation()
-  String externalStringRepresentation()d
+  Object object
+  String valueAsString
+  String valueAsInnerString
 }
 
 Table "1" *-- "*" Type : specified by
@@ -27,4 +27,5 @@ Type <|-- Char
 Type <|-- Real
 Type <|-- IntInterval
 Type <|-- TextFile
-
+Type <|-- Longint
+Type <|-- HtmlFile

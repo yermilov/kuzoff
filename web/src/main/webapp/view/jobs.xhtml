@@ -70,6 +70,10 @@
                             value="UNIQUE" actionListener="#{jobsWebApp.unique}" ajax="true" 
                             update="tables tables-for-operation table new-row" />
                         
+                        <p:commandButton 
+                            value="DIFFERENCE" actionListener="#{jobsWebApp.diff}" ajax="true" 
+                            update="tables tables-for-operation table new-row" />
+                        
                         <p:selectOneListbox id="tables-for-operation" value="#{jobsWebApp.secondaryTable}">
                             <f:selectItems value="#{jobsWebApp.allTables}" />
                             <p:ajax event="change" update="table new-row" />

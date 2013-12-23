@@ -89,6 +89,15 @@ public class JobsWebApp {
             throw new RuntimeException(e);
         }
     }
+    
+    public void diff() {
+        try {
+            databaseManager.difference(primaryTable, secondaryTable);
+            clearNewRowValue();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private List<String> clearNewRowValue() throws IOException {
         newRowValues  = new ArrayList<String>();
