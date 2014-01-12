@@ -22,7 +22,7 @@ function loadTableList(selectOneSelector, tableSelector) {
 function loadDataForTable(tableName, tableSelector) {
     $.get("http://localhost:8080/kuzoff-ws/api/table/" + tableName + "/data", null,
         function (responseData) {
-            $('#tableData').empty();
+            $(tableSelector).empty();
             $('#rowTmpl').tmpl(responseData).appendTo(tableSelector);
         }
     );
