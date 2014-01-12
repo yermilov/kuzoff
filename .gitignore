@@ -4,6 +4,10 @@
 .project
 bin/
 
+# IDEA #
+*.iml
+.idea/
+
 # Gradle #
 .gradle/
 build/
