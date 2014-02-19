@@ -18,3 +18,5 @@ orb.db
 # Build scritps #
 !webservice-server/src/build/
 !http-server/src/build
+!web/src/build
+!web2/src/build
