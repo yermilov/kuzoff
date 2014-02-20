@@ -1,0 +1,84 @@
+0. 
+- Install JDK
+- Install gradle, from source and add gradle/bin to PATH.
+  http://www.gradle.org/downloads
+
+Methods - core/src/main/java/cyberwaste/kuzoff/core/command/impl
+Types - core/src/main/java/cyberwaste/kuzoff/core/domain/types
+
+1. shell
+shell
+cd shell 
+gradle installApp
+./build/install/shell/bin/shell
+
+2. remote method invocation
+rmi-server
+cd rmi-server
+gradle installApp
+./build/isntall/rmi-server/bin/rmi-server
+
+other console
+
+rmi-client
+cd rmi-client
+gradle installApp
+./build/install/rmi-client/bin/rmi-client
+
+3. http
+http-server
+cd http-server
+gradle build deploy start (it'll start tomcat server)
+
+http-client
+cd http-client
+gradle installApp
+./build/install/http-client/bin/http-client
+
+4. iiop-client
+corba-server (http://www.cs.wustl.edu/~schmidt/gifs/corba5.gif)
+cd corba-server
+gradle installCorbaApp (write change path separator to ':' in linux)
+gradle orbd (in screen?)
+./build/install/corba-server/bin/corba-server
+
+iiop-client
+cd iiop-client
+gradle installIiopApp
+./build/install/iiop-client/bin/iiop-client
+
+5. reflection
+core/src/main/java/cyberwaste/kuzoff/core/command/CommandBuilder.java#L39
+
+6. webservice
+webservice-server
+cd webservice-server
+gradle build deploy start (http://localhost:8080/kuzoff-ws/api/table/table1/data)
+
+webservice-client
+cd webservice-client
+gradle installApp 
+./build/install/webservice-client/bin/webservice-client
+
+7. groovy-client
+webservice-server
+cd webservice-server
+gradle build deploy start (http://localhost:8080/kuzoff-ws/api/table/table1/data)
+
+groovy-client
+cd groovy-client
+./build/install/groovy-client/bin/groovy-client
+
+8. web
+cd web
+gradle build deploy start
+http://localhost:8080/kuzoff
+
+9. web2 (jQuery)
+webservice-server
+cd webservice-server
+gradle build deploy start (http://localhost:8080/kuzoff-ws/api/table/table1/data)
+
+web2
+cd web2
+gradle build deploy start
