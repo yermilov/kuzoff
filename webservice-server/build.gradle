@@ -7,6 +7,18 @@ tasks.withType(Compile) {
     options.encoding = 'UTF-8'
 }
 
+String os;
+switch(System.getProperty('os.name').toLowerCase().split()[0]) {
+  case 'windows':
+    os = 'windows'
+    break
+  case 'linux':
+    os = 'linux' 
+    break
+  default:
+    throw new Exception('Unknown OS')
+}
+
 dependencies {
     compile project(':core')
     
@@ -27,11 +39,19 @@ war {
 }
 
 task deploy(type:Exec) {
-    commandLine 'cmd', '/c', 'src\\build\\bat\\deploy.bat'
+    if (os=='windows') {
+        commandLine 'cmd', '/c', 'src\\build\\bat\\deploy.bat'
+    } else {
+        commandLine 'sh', 'src/build/bat/deploy.sh'
+    }
 }
 deploy.dependsOn build
 
 task start(type:Exec) {
-    commandLine 'cmd', '/c', 'src\\build\\bat\\start.bat'
+    if (os=='windows') {
+        commandLine 'cmd', '/c', 'src\\build\\bat\\start.bat'
+    } else {
+        commandLine 'sh', 'src/build/bat/start.sh'
+    }
 }
 start.dependsOn deploy
